@@ -12,6 +12,9 @@ app.use(
   })
 );
 app.use(express.json());
+app.get("/", (req, res) => {
+  res.send("This is the main Page");
+});
 app.use("/users", authrouter);
 app.use(authantication);
 app.use("/notes", noteRouter);
