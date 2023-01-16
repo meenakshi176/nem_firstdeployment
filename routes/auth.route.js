@@ -18,10 +18,10 @@ authrouter.post("/register", async (req, res) => {
         console.log(err);
       } else {
         const user = new AuthModel({
-          email,
+          email: email,
           password: secure_password,
-          name,
-          age,
+          name: name,
+          age: age,
         });
         await user.save();
         res.send("Registered");
@@ -32,14 +32,17 @@ authrouter.post("/register", async (req, res) => {
     console.log(e);
   }
 });
+
 authrouter.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await AuthModel.find({ email });
     // console.log(user);
+    const password_from_client = password;
+    const password_from_db = user[0].password;
 
     if (user.length > 0) {
-      bcrypt.compare(password, user[0].password, (err, result) => {
+      bcrypt.compare(password_from_client, password_from_db, (err, result) => {
         // result == true
         if (result) {
           const token = jwt.sign({ userID: user[0]._id }, process.env.key);

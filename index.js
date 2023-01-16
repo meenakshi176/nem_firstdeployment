@@ -13,7 +13,7 @@ app.use(
 );
 app.use(express.json());
 app.get("/", (req, res) => {
-  res.send("This is the main Page");
+  res.send("Social Media Backend App");
 });
 app.use("/users", authrouter);
 app.use(authantication);
